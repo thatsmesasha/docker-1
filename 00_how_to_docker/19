@@ -1,0 +1,1 @@
+docker run -it --name Abathur -v $HOME:/root -p 3000:3000 -d python:2-slim sh -c 'apt-get update && apt-get install -y build-essential vim && pip install flask flask-sqlalchemy flask-admin'
