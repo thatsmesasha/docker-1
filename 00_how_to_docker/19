@@ -1,1 +1,15 @@
-docker run -it --name Abathur -v $HOME:/root -p 3000:3000 -d python:2-slim sh -c 'apt-get update && apt-get install -y build-essential vim && pip install flask flask-sqlalchemy flask-admin'
+docker run -it --name Abathur -v $HOME:/root -p 3000:3000 -d python:2-slim
+docker exec Abathur apt-get update
+docker exec Abathur apt-get install -y build-essential vim
+docker exec Abathur pip install flask flask-sqlalchemy flask-admin
+docker exec Abathur touch /root/server.py
+docker exec Abathur bash -c "echo \
+'from flask import Flask
+app = Flask(__name__)
+@app.route(\"/\")
+def hello_world():
+    return \"<h1>Hello World</h1>\"
+
+if __name__ == \"__main__\":
+    app.run(host=\"0.0.0.0\", port=\"3000\")' >> /root/server.py"
+docker exec Abathur bash -c 'python /root/server.py'
